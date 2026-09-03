@@ -1,9 +1,6 @@
----
-import VoxelMark from "./VoxelMark.astro";
----
 <header class="site-header">
   <a class="identity" href="/" aria-label="Andy David, home">
-    <VoxelMark small />
+    <img class="identity-mark" src="/family-crest.webp" width="22" height="23" alt="" aria-hidden="true" />
     <span>Andy David</span>
   </a>
   <nav aria-label="Main navigation">
@@ -20,6 +17,7 @@ import VoxelMark from "./VoxelMark.astro";
 <style>
   .site-header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 28px 0 22px; border-bottom: 1px solid var(--line); }
   .identity { display: flex; align-items: center; gap: 12px; font-weight: 620; letter-spacing: -.015em; }
+  .identity-mark { display: block; width: 22px; height: 23px; object-fit: cover; border-radius: 3px; }
   nav { display: flex; gap: 24px; }
   nav a { color: var(--muted); font-size: .84rem; transition: color .15s ease; }
   nav a:hover { color: var(--text); }
