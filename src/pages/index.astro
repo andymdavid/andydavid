@@ -1,0 +1,131 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectList from "../components/ProjectList.astro";
+import SocialLinks from "../components/SocialLinks.astro";
+import GitHubActivity from "../components/GitHubActivity.astro";
+
+const projects = await getCollection("projects");
+const links = (await getCollection("links", ({ data }) => !data.draft)).sort((a, b) => a.data.order - b.data.order).slice(0, 4);
+---
+<BaseLayout>
+  <section class="intro">
+    <div class="intro-heading">
+      <div class="profile-primary">
+        <a class="portrait-wrap" href="/about/" aria-label="More about Andy David">
+          <img class="portrait-thumb" src="/andy-david.webp" width="58" height="58" alt="Portrait of Andy David" />
+          <img class="portrait-preview" src="/andy-david.webp" width="168" height="168" alt="" aria-hidden="true" />
+          <span class="availability" title="Currently open to interesting conversations"></span>
+        </a>
+        <div>
+          <h1>Andy David</h1>
+          <p>Venture designer & builder</p>
+        </div>
+      </div>
+      <SocialLinks />
+    </div>
+
+    <div class="bio">
+      <p>Hey, I’m Andy 👋 Co-founder of <a href="https://otherstuff.ai" target="_blank" rel="noreferrer">Other Stuff</a>. I work with SME business leaders to put AI agents to work inside their business in ways that increase margins, free up capital and reduce risk.</p>
+      <p>I also co-host <a href="https://intelligencesnacks.com" target="_blank" rel="noreferrer">Intelligence Snacks</a>. It’s a podcast about how artificial intelligence is changing work, business, software and entrepreneurship. We discuss the tools we’re using, what we’re building, the ideas that matter and the ripple effects most people miss—from agents and automation to incentives and what humans should do next.</p>
+      <p>I’ve been building small businesses since I was 20, across both bits and atoms, including software, media, and physical products. Across all of them, I’m interested in technology that gives people and smaller teams more capability, more control and greater freedom to pursue work on their own terms.</p>
+    </div>
+
+    <div class="availability-line">
+      <span><i></i> Perth, Western Australia</span>
+      <a href="mailto:andy@otherstuff.studio">Let’s chat ↗</a>
+    </div>
+  </section>
+
+  <section class="work-section">
+    <ProjectList projects={projects} filterable />
+    <a class="see-all" href="/projects/">View all work and project notes <span>→</span></a>
+  </section>
+
+  <GitHubActivity />
+
+  <section class="internet-section">
+    <div class="section-topline">
+      <h2>Reading list</h2>
+      <a href="/links/">View list →</a>
+    </div>
+    <div class="link-list">
+      {links.length ? links.map((link) => (
+        <a href={link.data.url} target="_blank" rel="noreferrer">
+          <span>{link.data.title}</span>
+          <small>{link.data.note}</small>
+          <b>↗</b>
+        </a>
+      )) : <p class="empty-reading">Nothing on the shelf yet. Check back soon.</p>}
+    </div>
+  </section>
+
+  <section class="subscribe-section">
+    <a class="subscribe-logo-link" href="https://intelligencesnacks.com" target="_blank" rel="noreferrer" aria-label="Visit Intelligence Snacks">
+      <img class="subscribe-logo" src="/intelligence-snacks.webp" width="58" height="58" alt="" />
+    </a>
+    <div class="subscribe-copy">
+      <a class="subscribe-name" href="https://intelligencesnacks.com" target="_blank" rel="noreferrer">Intelligence Snacks</a>
+      <h2>Big Ideas Compound</h2>
+      <p>A weekly digest of useful ideas emerging from AI, software, business, and work.</p>
+    </div>
+    <a class="subscribe-action" href="https://intelligencesnacks.com/#subscribe" target="_blank" rel="noreferrer">
+      Read &amp; subscribe <span aria-hidden="true">↗</span>
+    </a>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro { padding-top: 66px; }
+  .intro-heading { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+  .profile-primary { display: flex; align-items: center; gap: 16px; }
+  h1 { margin: 0; font-size: 1rem; font-weight: 650; letter-spacing: -.025em; }
+  .intro-heading p { margin: 3px 0 0; color: var(--muted); font-size: .78rem; }
+  .portrait-wrap { position: relative; display: block; width: 58px; height: 58px; z-index: 5; }
+  .portrait-wrap img { display: block; object-fit: cover; filter: saturate(.82) contrast(.98); border: 1px solid var(--line); }
+  .portrait-thumb { width: 58px; height: 58px; border-radius: 13px; }
+  .portrait-preview { position: absolute; z-index: 8; left: 0; top: 50%; width: 168px; height: 168px; border-radius: 11px; opacity: 0; pointer-events: none; transform: translateY(-50%) scale(.94); transform-origin: left center; box-shadow: 0 18px 46px rgba(16,18,16,.24); transition: opacity .16s ease, transform .22s cubic-bezier(.2,.8,.2,1); }
+  .portrait-wrap:hover .portrait-preview, .portrait-wrap:focus-visible .portrait-preview { opacity: 1; transform: translateY(-50%) scale(1); }
+  .portrait-wrap:focus-visible { outline: none; }
+  .availability { position: absolute; right: -3px; bottom: -3px; width: 13px; height: 13px; border-radius: 50%; background: #72c77a; border: 3px solid var(--bg); }
+  .bio { margin-top: 34px; color: var(--muted); font-size: .95rem; line-height: 1.72; }
+  .bio p { margin: 0 0 12px; }
+  .bio a { color: var(--text); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 3px; }
+  .bio a:hover { text-decoration-color: currentColor; }
+  .availability-line { display: flex; justify-content: space-between; gap: 24px; align-items: center; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--faint); font: .61rem var(--mono); text-transform: uppercase; letter-spacing: .03em; }
+  .availability-line span { display: flex; align-items: center; gap: 8px; }
+  .availability-line i { width: 5px; height: 5px; background: #72c77a; border-radius: 50%; box-shadow: 0 0 0 3px color-mix(in srgb, #72c77a, transparent 78%); }
+  .availability-line a:hover { color: var(--text); }
+  .work-section { margin-top: 82px; }
+  .see-all { display: flex; justify-content: space-between; color: var(--muted); font-size: .7rem; padding: 15px 3px; }
+  .see-all:hover { color: var(--text); }
+  .internet-section { margin-top: 82px; }
+  .link-list { border-top: 1px solid var(--line); }
+  .link-list a { display: grid; grid-template-columns: 150px 1fr 18px; align-items: center; gap: 14px; padding: 14px 3px; border-bottom: 1px solid var(--line); transition: padding .15s ease, background .15s ease; }
+  .link-list a:hover { padding-left: 8px; padding-right: 8px; background: var(--surface-soft); }
+  .link-list span { font-size: .8rem; font-weight: 580; }
+  .link-list small { color: var(--muted); font-size: .68rem; }
+  .link-list b { color: var(--faint); font-weight: 400; }
+  .empty-reading { margin: 0; padding: 25px 3px; border-bottom: 1px solid var(--line); color: var(--faint); font: .65rem var(--mono); }
+  .subscribe-section { margin-top: 86px; padding: 27px 3px; border-top: 1px solid var(--line-strong); border-bottom: 1px solid var(--line-strong); display: grid; grid-template-columns: 58px minmax(0, 1fr) auto; gap: 20px; align-items: center; }
+  .subscribe-logo-link, .subscribe-logo { display: block; width: 58px; height: 58px; }
+  .subscribe-logo { border: 1px solid var(--line); border-radius: 11px; object-fit: cover; }
+  .subscribe-copy { min-width: 0; }
+  .subscribe-name { color: var(--faint); font: .55rem var(--mono); text-transform: uppercase; letter-spacing: .055em; }
+  .subscribe-name:hover { color: var(--text); }
+  .subscribe-copy h2 { margin: 4px 0 0; font-size: 1rem; line-height: 1.2; font-weight: 620; letter-spacing: -.025em; }
+  .subscribe-copy p { max-width: 400px; margin: 5px 0 0; color: var(--muted); font-size: .68rem; line-height: 1.5; }
+  .subscribe-action { display: flex; align-items: center; gap: 22px; min-height: 39px; padding: 0 13px; border: 1px solid var(--text); border-radius: 8px; color: var(--bg); background: var(--text); font-size: .67rem; font-weight: 600; white-space: nowrap; transition: transform .15s ease, opacity .15s ease; }
+  .subscribe-action:hover { opacity: .86; transform: translateY(-1px); }
+  .subscribe-action span { transition: transform .15s ease; }
+  .subscribe-action:hover span { transform: translate(2px, -2px); }
+  @media (max-width: 560px) {
+    .intro { padding-top: 48px; }
+    .intro-heading { align-items: flex-start; flex-direction: column; gap: 16px; }
+    .availability-line { align-items: flex-start; flex-direction: column; gap: 10px; }
+    .link-list a { grid-template-columns: 110px 1fr 16px; }
+    .subscribe-section { grid-template-columns: 50px minmax(0, 1fr); gap: 14px; padding: 23px 2px; }
+    .subscribe-logo { width: 50px; height: 50px; border-radius: 9px; }
+    .subscribe-action { grid-column: 1 / -1; justify-content: space-between; margin-top: 5px; }
+  }
+</style>
