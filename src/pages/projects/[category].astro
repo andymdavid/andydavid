@@ -1,0 +1,32 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectList from "../../components/ProjectList.astro";
+
+export function getStaticPaths() {
+  return ["bits", "atoms"].map((category) => ({ params: { category } }));
+}
+
+const category = Astro.params.category as "bits" | "atoms";
+const projects = (await getCollection("projects")).filter((project) => project.data.category === category);
+const isBits = category === "bits";
+---
+<BaseLayout title={`${isBits ? "Bits" : "Atoms"} — work by Andy David`} description={`${isBits ? "Digital" : "Physical"} projects and experiments by Andy David.`}>
+  <section class="page">
+    <p class="eyebrow">Work / {category}</p>
+    <h1 class="page-title">{isBits ? "Made of bits." : "Made of atoms."}</h1>
+    <p class="page-intro">{isBits ? "Software, media, digital ventures, and experiments." : "Objects, spaces, and work that exists away from the screen. Public entries will appear here as they take shape."}</p>
+    <div class="list-wrap">
+      {projects.length ? <ProjectList projects={projects} /> : <div class="empty"><i></i><p>No public atoms yet.</p><small>There are usually a few things taking shape.</small></div>}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .list-wrap { margin-top: 58px; }
+  .empty { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 70px 0; text-align: center; }
+  .empty i { display: block; width: 42px; height: 42px; border: 1px solid var(--line-strong); border-radius: 50%; margin: auto; position: relative; }
+  .empty i::after { content: ""; position: absolute; width: 6px; height: 6px; border-radius: 50%; background: #ff765d; top: -3px; left: 18px; }
+  .empty p { margin: 18px 0 3px; font-size: .82rem; }
+  .empty small { color: var(--faint); font-size: .67rem; }
+</style>
