@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://andydavid.com/sitemap-index.xml
