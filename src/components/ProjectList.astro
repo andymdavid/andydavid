@@ -1,0 +1,119 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  projects: CollectionEntry<"projects">[];
+  filterable?: boolean;
+  active?: "all" | "bits" | "atoms";
+}
+
+const { projects, filterable = false, active = "all" } = Astro.props;
+const sorted = [...projects].sort((a, b) => a.data.order - b.data.order);
+const initials = (title: string) => title.split(/[\s/-]+/).map((word) => word[0]).join("").slice(0, 2).toUpperCase();
+---
+{filterable && (
+  <div class="work-controls" aria-label="Filter work">
+    <span class="control-label">Work &amp; Projects</span>
+    <div class="segmented">
+      <button type="button" class:list={{ active: active === "all" }} data-filter="all">All</button>
+      <button type="button" class:list={{ active: active === "bits" }} data-filter="bits"><i class="pixel bits"></i>Bits</button>
+      <button type="button" class:list={{ active: active === "atoms" }} data-filter="atoms"><i class="pixel atoms"></i>Atoms</button>
+    </div>
+  </div>
+)}
+
+<div class="project-list" data-project-list>
+  {sorted.map((project) => (
+    <article class="project-row" data-category={project.data.category} data-project={project.id} style={`--project-accent:${project.data.accent}`}>
+      <a
+        href={project.data.externalUrl ?? `/projects/${project.id}/`}
+        target={project.data.externalUrl ? "_blank" : undefined}
+        rel={project.data.externalUrl ? "noreferrer" : undefined}
+        aria-label={project.data.externalUrl ? `Visit ${project.data.title}` : `Read about ${project.data.title}`}
+      >
+        {project.data.logo ? (
+          <span class="project-logo"><img src={project.data.logo} width="42" height="42" alt="" loading="lazy" /></span>
+        ) : (
+          <span class="project-fallback" aria-hidden="true">{initials(project.data.title)}</span>
+        )}
+        <span class="project-main">
+          <strong>{project.data.title}</strong>
+          <small>{project.data.summary}</small>
+        </span>
+        <span class="project-meta">
+          <span>{project.data.role}</span>
+          <span>{project.data.year}</span>
+        </span>
+        <span class="arrow" aria-hidden="true">↗</span>
+      </a>
+    </article>
+  ))}
+  <div class="empty-atoms" hidden>
+    <span class="atom-orbit" aria-hidden="true"><i></i></span>
+    <p>No public atoms yet.</p>
+    <small>There are usually a few things taking shape away from the screen.</small>
+  </div>
+</div>
+
+{filterable && (
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>("[data-filter]");
+    const rows = document.querySelectorAll<HTMLElement>("[data-category]");
+    const empty = document.querySelector<HTMLElement>(".empty-atoms");
+
+    buttons.forEach((button) => button.addEventListener("click", () => {
+      const filter = button.dataset.filter;
+      buttons.forEach((item) => item.classList.toggle("active", item === button));
+      let shown = 0;
+      rows.forEach((row) => {
+        const visible = filter === "all" || row.dataset.category === filter;
+        row.hidden = !visible;
+        if (visible) shown += 1;
+      });
+      if (empty) empty.hidden = shown !== 0;
+      history.replaceState(null, "", filter === "all" ? location.pathname : `?work=${filter}`);
+    }));
+
+    const initial = new URLSearchParams(location.search).get("work");
+    if (initial === "bits" || initial === "atoms") {
+      document.querySelector<HTMLButtonElement>(`[data-filter="${initial}"]`)?.click();
+    }
+  </script>
+)}
+
+<style>
+  .work-controls { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+  .control-label { font-size: .8rem; font-weight: 650; }
+  .segmented { background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 3px; display: flex; gap: 2px; }
+  .segmented button { border: 0; color: var(--muted); background: transparent; border-radius: 6px; padding: 6px 9px; font: .67rem var(--mono); cursor: pointer; display: flex; align-items: center; gap: 6px; }
+  .segmented button.active { background: var(--surface-strong); color: var(--text); box-shadow: var(--soft-shadow); }
+  .pixel { width: 5px; height: 5px; display: inline-block; background: #758cff; }
+  .pixel.atoms { border-radius: 50%; background: #ff765d; }
+  .project-list { border-top: 1px solid var(--line); }
+  .project-row { border-bottom: 1px solid var(--line); }
+  .project-row[hidden] { display: none; }
+  .project-row a { display: grid; grid-template-columns: 42px minmax(0, 1fr) 130px 20px; gap: 16px; align-items: center; min-height: 92px; padding: 15px 14px; transition: padding .18s ease, background .18s ease; }
+  .project-row a:hover { padding-left: 20px; padding-right: 20px; background: var(--surface-soft); }
+  .project-logo, .project-fallback { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 9px; overflow: hidden; background: var(--surface-2); border: 1px solid var(--line); }
+  .project-logo img { width: 100%; height: 100%; object-fit: cover; }
+  .project-row[data-project="cloud-modular"] .project-logo { background: #050505; }
+  .project-row[data-project="cloud-modular"] .project-logo img { object-position: center; transform: translate(2px, -1px); }
+  .project-fallback { color: var(--text); background: color-mix(in srgb, var(--project-accent), var(--surface) 72%); font: .61rem var(--mono); letter-spacing: -.03em; }
+  .project-main { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+  .project-main strong { font-size: .92rem; font-weight: 600; }
+  .project-main small { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: .74rem; }
+  .project-meta { color: var(--faint); font: .58rem/1.6 var(--mono); text-transform: uppercase; display: flex; flex-direction: column; }
+  .arrow { color: var(--faint); transition: transform .15s ease; }
+  a:hover .arrow { transform: translate(2px, -2px); color: var(--text); }
+  .empty-atoms { padding: 50px 0 35px; text-align: center; }
+  .empty-atoms p { margin: 18px 0 5px; font-size: .84rem; }
+  .empty-atoms small { color: var(--muted); font-size: .7rem; }
+  .atom-orbit { display: block; margin: auto; width: 35px; height: 35px; border: 1px solid var(--line-strong); border-radius: 50%; position: relative; }
+  .atom-orbit i { position: absolute; width: 5px; height: 5px; background: #ff765d; border-radius: 50%; top: -3px; left: 15px; }
+  @media (max-width: 620px) {
+    .project-row a { grid-template-columns: 38px 1fr 18px; gap: 12px; padding-inline: 4px; }
+    .project-row a:hover { padding-inline: 8px; }
+    .project-logo, .project-fallback { width: 34px; height: 34px; }
+    .project-meta { display: none; }
+  }
+</style>
