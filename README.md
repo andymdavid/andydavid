@@ -33,7 +33,11 @@ Projects use `category: bits` for digital work and `category: atoms` for physica
 
 The homepage can render Andy's contribution calendar at build time using GitHub's GraphQL API. Copy `.env.example` to `.env` and set `GITHUB_TOKEN` to a read-only token. The token remains server-side and is not included in the generated site.
 
-For automatic updates, configure the eventual host to rebuild on a daily or weekly schedule. If the token is missing or GitHub is unavailable, the activity section is omitted and the rest of the build continues normally.
+The GitHub Pages workflow rebuilds the site daily to refresh this data. For access to the same contribution data as local builds, create a repository Actions secret named `GH_ACTIVITY_TOKEN`. The workflow falls back to GitHub's automatic token when that secret is unavailable. If GitHub is unavailable, the activity section is omitted and the rest of the build continues normally.
+
+## Deployment
+
+`.github/workflows/deploy.yml` builds and deploys the site to GitHub Pages whenever `main` changes, on manual dispatch, and once each day. GitHub Pages must use **GitHub Actions** as its publishing source. The custom domain is configured in the repository's Pages settings; Astro's canonical `site` remains `https://andydavid.com`.
 
 ## Intelligence Snacks signup
 
