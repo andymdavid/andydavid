@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Local source artwork; optimized web assets are tracked instead.
+public/Family-Crest.png
+public/Intelligence-Snacks-Logo.png
