@@ -37,7 +37,7 @@ The GitHub Pages workflow rebuilds the site daily to refresh this data. For acce
 
 ## Deployment
 
-`.github/workflows/deploy.yml` builds and deploys the site to GitHub Pages whenever `main` changes, on manual dispatch, and once each day. GitHub Pages must use **GitHub Actions** as its publishing source. The custom domain is configured in the repository's Pages settings; Astro's canonical `site` remains `https://andydavid.com`.
+`.github/workflows/deploy.yml` builds and deploys the site to GitHub Pages whenever `main` changes, on manual dispatch, and once each day. GitHub Pages must use **GitHub Actions** as its publishing source. The custom domain is configured in the repository's Pages settings; Astro's canonical `site` remains `https://andydavid.com.au`.
 
 ## Intelligence Snacks signup
 
