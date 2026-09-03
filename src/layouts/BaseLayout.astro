@@ -1,0 +1,122 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+}
+
+const {
+  title = "Andy David — venture designer and builder",
+  description = "Andy David is a venture designer and co-founder working across AI agents, software, media, and physical ventures in Perth, Western Australia.",
+  image = "/andy-david.webp",
+  type = "website",
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = new URL(image, Astro.site);
+const personId = new URL("/#person", Astro.site).href;
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": new URL("/#website", Astro.site).href,
+      url: new URL("/", Astro.site).href,
+      name: "Andy David",
+      inLanguage: "en-AU",
+    },
+    {
+      "@type": "Person",
+      "@id": personId,
+      url: new URL("/about/", Astro.site).href,
+      name: "Andy David",
+      jobTitle: "Venture designer and co-founder",
+      description,
+      image: imageUrl.href,
+      homeLocation: { "@type": "Place", name: "Perth, Western Australia" },
+      sameAs: [
+        "https://github.com/andymdavid",
+        "https://x.com/andymdavid",
+        "https://www.linkedin.com/in/andymdavid/",
+        "https://primal.net/andydavid",
+        "https://www.youtube.com/@intelligencesnacks",
+      ],
+      worksFor: { "@id": "https://otherstuff.ai/#organization" },
+    },
+    {
+      "@type": "ProfilePage",
+      "@id": new URL("/about/#profile-page", Astro.site).href,
+      url: new URL("/about/", Astro.site).href,
+      name: "About Andy David",
+      mainEntity: { "@id": personId },
+      isPartOf: { "@id": new URL("/#website", Astro.site).href },
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://otherstuff.ai/#organization",
+      name: "Other Stuff",
+      url: "https://otherstuff.ai",
+      founder: { "@id": personId },
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://intelligencesnacks.com/#organization",
+      name: "Intelligence Snacks",
+      url: "https://intelligencesnacks.com",
+      founder: { "@id": personId },
+    },
+  ],
+};
+---
+<!doctype html>
+<html lang="en-AU">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f2f1ec" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
+    <link rel="icon" href="/favicon-32.png?v=2" type="image/png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:site_name" content="Andy David" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <title>{title}</title>
+    <script is:inline>
+      (() => {
+        const saved = localStorage.getItem("andy-theme");
+        document.documentElement.dataset.theme = saved || "light";
+      })();
+    </script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </head>
+  <body>
+    <div class="site-shell">
+      <Header />
+      <main><slot /></main>
+      <Footer />
+    </div>
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>(".theme-toggle");
+      toggle?.addEventListener("click", () => {
+        const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.dataset.theme = next;
+        localStorage.setItem("andy-theme", next);
+      });
+    </script>
+  </body>
+</html>

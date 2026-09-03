@@ -1,0 +1,35 @@
+---
+import VoxelMark from "./VoxelMark.astro";
+---
+<header class="site-header">
+  <a class="identity" href="/" aria-label="Andy David, home">
+    <VoxelMark small />
+    <span>Andy David</span>
+  </a>
+  <nav aria-label="Main navigation">
+    <a href="/about/">About</a>
+    <a href="/projects/">Work</a>
+    <a href="/links/">Reading</a>
+  </nav>
+  <button class="theme-toggle" type="button" aria-label="Switch colour theme" title="Switch colour theme">
+    <span class="sun" aria-hidden="true">☼</span>
+    <span class="moon" aria-hidden="true">◐</span>
+  </button>
+</header>
+
+<style>
+  .site-header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 28px 0 22px; border-bottom: 1px solid var(--line); }
+  .identity { display: flex; align-items: center; gap: 12px; font-weight: 620; letter-spacing: -.015em; }
+  nav { display: flex; gap: 24px; }
+  nav a { color: var(--muted); font-size: .84rem; transition: color .15s ease; }
+  nav a:hover { color: var(--text); }
+  .theme-toggle { justify-self: end; border: 1px solid var(--line); background: var(--surface); color: var(--text); width: 34px; height: 34px; padding: 0; display: grid; place-items: center; border-radius: 9px; cursor: pointer; transition: background .15s ease, transform .15s ease; }
+  .theme-toggle:hover { background: var(--surface-2); transform: rotate(4deg); }
+  .moon { display: none; }
+  :global([data-theme="dark"]) .sun { display: none; }
+  :global([data-theme="dark"]) .moon { display: inline; }
+  @media (max-width: 560px) {
+    .site-header { grid-template-columns: 1fr auto; }
+    nav { display: none; }
+  }
+</style>

@@ -1,0 +1,28 @@
+---
+const year = new Date().getFullYear();
+---
+<footer>
+  <div class="footer-row">
+    <span>Elsewhere</span>
+    <div class="socials">
+      <a href="https://github.com/andymdavid" rel="me noreferrer" target="_blank">GitHub ↗</a>
+      <a href="https://x.com/andymdavid" rel="me noreferrer" target="_blank">X ↗</a>
+      <a href="https://www.linkedin.com/in/andymdavid/" rel="me noreferrer" target="_blank">LinkedIn ↗</a>
+      <a href="https://primal.net/andydavid" rel="me noreferrer" target="_blank">Nostr ↗</a>
+      <a href="https://www.youtube.com/@intelligencesnacks" rel="me noreferrer" target="_blank">YouTube ↗</a>
+    </div>
+  </div>
+  <div class="footer-row quiet">
+    <span>Perth, Western Australia</span>
+    <span>© {year} Andy David</span>
+  </div>
+</footer>
+
+<style>
+  footer { padding: 44px 0 30px; border-top: 1px solid var(--line); margin-top: 86px; }
+  .footer-row { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; font-size: .78rem; }
+  .socials { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 18px; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .quiet { margin-top: 70px; color: var(--faint); font: .65rem/1.5 var(--mono); text-transform: uppercase; letter-spacing: .05em; }
+  @media (max-width: 560px) { .quiet { margin-top: 50px; } }
+</style>
