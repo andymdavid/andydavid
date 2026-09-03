@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout title="Not found — Andy David" description="This page could not be found.">
+  <section class="missing">
+    <div class="lost-pixels" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <p class="eyebrow">404 / Missing material</p>
+    <h1>Neither bits<br />nor atoms.</h1>
+    <p>This page doesn’t seem to exist.</p>
+    <a href="/">Return home <span>→</span></a>
+  </section>
+</BaseLayout>
+
+<style>
+  .missing { min-height: 58vh; display: flex; flex-direction: column; justify-content: center; position: relative; }
+  h1 { margin: 0; font-size: clamp(2.7rem, 10vw, 5rem); font-weight: 520; line-height: .98; letter-spacing: -.065em; }
+  .missing > p:not(.eyebrow) { color: var(--muted); margin: 24px 0; }
+  .missing > a { width: fit-content; border-bottom: 1px solid var(--line-strong); font-size: .75rem; padding-bottom: 3px; }
+  .missing > a span { margin-left: 20px; }
+  .lost-pixels { position: absolute; right: 8%; top: 25%; display: grid; grid-template-columns: repeat(3, 13px); gap: 4px; transform: rotate(7deg); }
+  .lost-pixels i { width: 13px; height: 13px; background: var(--accent); }
+  .lost-pixels i:nth-child(2) { opacity: .65; transform: translate(4px,-8px); }
+  .lost-pixels i:nth-child(3) { opacity: .35; transform: translate(12px,-18px); }
+  .lost-pixels i:nth-child(4) { opacity: .2; transform: translate(22px,-30px); }
+  .lost-pixels i:nth-child(5) { opacity: .1; transform: translate(36px,-44px); }
+</style>
