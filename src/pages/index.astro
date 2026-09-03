@@ -37,12 +37,12 @@ const links = (await getCollection("links", ({ data }) => !data.draft)).sort((a,
     </div>
   </section>
 
+  <GitHubActivity />
+
   <section class="work-section">
     <ProjectList projects={projects} filterable />
     <a class="see-all" href="/projects/">View all work and project notes <span>→</span></a>
   </section>
-
-  <GitHubActivity />
 
   <section class="internet-section">
     <div class="section-topline">
