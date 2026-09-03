@@ -1,0 +1,47 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout title="About Andy David — venture designer and co-founder" description="About Andy David, a venture designer and co-founder working across AI agents, software, media, and physical ventures in Perth, Western Australia.">
+  <article class="page about-page">
+    <p class="eyebrow">About / Andy David</p>
+    <div class="title-row">
+      <h1 class="page-title">Generalist by nature.<br />Specific by choice.</h1>
+      <img src="/andy-david.webp" width="128" height="128" alt="Andy David" />
+    </div>
+
+    <div class="about-body">
+      <p class="lead">Hey, I’m Andy 👋 Co-founder of <a class="text-link" href="https://otherstuff.ai" target="_blank" rel="noreferrer">Other Stuff</a>. I’ve been building small businesses since I was 20, across both bits and atoms, including software, media, and physical products.</p>
+      <p>Across all of them, I’m interested in technology that gives people and smaller teams more capability, more control and greater freedom to pursue work on their own terms.</p>
+      <p>Other Stuff is a Product Studio. We work with SME business leaders to put AI agents to work inside their business in ways that increase margins, free up capital and reduce risk. Alongside our work with SMEs, we develop and release our own products.</p>
+      <p>We do that through Wingman, our orchestration environment for putting agents to work inside a business effectively alongside existing people, processes and tools. It gives teams a way to deploy agents into real workflows without replacing the tools they already use.</p>
+      <p>Alongside that, we build highly personalised software around the specific work a business needs done, giving SMEs access to software that fits the way they operate rather than forcing them into generic SaaS.</p>
+      <p>I also co-host <a class="text-link" href="https://intelligencesnacks.com" target="_blank" rel="noreferrer">Intelligence Snacks</a>. It’s a podcast about how artificial intelligence is changing work, business, software and entrepreneurship. We discuss the tools we’re using, what we’re building, the ideas that matter and the ripple effects most people miss—from agents and automation to incentives and what humans should do next.</p>
+      <p>It’s for anyone thinking seriously about what AI means for their work, their team or their business.</p>
+    </div>
+
+    <dl class="details">
+      <div><dt>Based</dt><dd>Perth / GMT+8</dd></div>
+      <div><dt>Working across</dt><dd>Venture design, product, technology</dd></div>
+      <div><dt>Current ventures</dt><dd><a href="https://otherstuff.ai">Other Stuff</a>, <a href="https://intelligencesnacks.com">Intelligence Snacks</a></dd></div>
+      <div><dt>Contact</dt><dd><a href="mailto:andy@otherstuff.studio">andy@otherstuff.studio ↗</a></dd></div>
+    </dl>
+  </article>
+</BaseLayout>
+
+<style>
+  .title-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
+  .title-row img { width: 108px; height: 108px; object-fit: cover; border-radius: 18px; filter: saturate(.72); border: 1px solid var(--line); }
+  .about-body { width: min(100%, 560px); margin-top: 58px; color: var(--muted); font-size: .93rem; line-height: 1.8; }
+  .about-body p { margin: 0 0 20px; }
+  .about-body .lead { color: var(--text); font-size: 1.12rem; line-height: 1.6; }
+  .details { margin: 56px 0 0; border-top: 1px solid var(--line); }
+  .details div { display: grid; grid-template-columns: 165px 1fr; gap: 20px; padding: 14px 3px; border-bottom: 1px solid var(--line); }
+  dt { color: var(--faint); font: .58rem var(--mono); text-transform: uppercase; }
+  dd { margin: 0; font-size: .76rem; }
+  dd a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  @media (max-width: 560px) {
+    .title-row { align-items: flex-start; flex-direction: column-reverse; gap: 26px; }
+    .title-row img { width: 82px; height: 82px; }
+    .details div { grid-template-columns: 115px 1fr; }
+  }
+</style>
