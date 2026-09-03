@@ -1,0 +1,11 @@
+[
+  {
+    "id": "placeholder",
+    "title": "Reading list placeholder",
+    "url": "https://example.com",
+    "note": "Not published.",
+    "kind": "read",
+    "order": 0,
+    "draft": true
+  }
+]
