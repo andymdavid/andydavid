@@ -15,7 +15,7 @@ const projectSchema = {
   name: project.data.title,
   description: project.data.summary,
   url: new URL(Astro.url.pathname, Astro.site).href,
-  creator: { "@id": new URL("/#person", Astro.site).href },
+  contributor: { "@id": new URL("/#person", Astro.site).href },
 };
 ---
 <BaseLayout title={`${project.data.title} — a project by Andy David`} description={project.data.summary}>

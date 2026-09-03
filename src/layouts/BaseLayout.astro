@@ -19,16 +19,29 @@ const {
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const imageUrl = new URL(image, Astro.site);
+const siteId = new URL("/#website", Astro.site).href;
 const personId = new URL("/#person", Astro.site).href;
+const personDescription = "Andy David is a venture designer and co-founder working across AI agents, software, media, and physical ventures in Perth, Western Australia.";
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "WebSite",
-      "@id": new URL("/#website", Astro.site).href,
+      "@id": siteId,
       url: new URL("/", Astro.site).href,
       name: "Andy David",
       inLanguage: "en-AU",
+      publisher: { "@id": personId },
+    },
+    {
+      "@type": "WebPage",
+      "@id": `${canonical.href}#webpage`,
+      url: canonical.href,
+      name: title,
+      description,
+      inLanguage: "en-AU",
+      isPartOf: { "@id": siteId },
+      about: { "@id": personId },
     },
     {
       "@type": "Person",
@@ -36,9 +49,10 @@ const structuredData = {
       url: new URL("/about/", Astro.site).href,
       name: "Andy David",
       jobTitle: "Venture designer and co-founder",
-      description,
-      image: imageUrl.href,
+      description: personDescription,
+      image: new URL("/andy-david.webp", Astro.site).href,
       homeLocation: { "@type": "Place", name: "Perth, Western Australia" },
+      knowsAbout: ["AI agents", "small business software", "product design", "venture design", "media", "physical products"],
       sameAs: [
         "https://github.com/andymdavid",
         "https://x.com/andymdavid",
@@ -46,7 +60,11 @@ const structuredData = {
         "https://primal.net/andydavid",
         "https://www.youtube.com/@intelligencesnacks",
       ],
-      worksFor: { "@id": "https://otherstuff.ai/#organization" },
+      worksFor: [
+        { "@id": "https://otherstuff.ai/#organization" },
+        { "@id": "https://offpistestudio.com/#organization" },
+        { "@id": "https://cloudmodular.com.au/#organization" },
+      ],
     },
     {
       "@type": "ProfilePage",
@@ -54,7 +72,7 @@ const structuredData = {
       url: new URL("/about/", Astro.site).href,
       name: "About Andy David",
       mainEntity: { "@id": personId },
-      isPartOf: { "@id": new URL("/#website", Astro.site).href },
+      isPartOf: { "@id": siteId },
     },
     {
       "@type": "Organization",
@@ -65,10 +83,26 @@ const structuredData = {
     },
     {
       "@type": "Organization",
-      "@id": "https://intelligencesnacks.com/#organization",
+      "@id": "https://offpistestudio.com/#organization",
+      name: "Off-Piste Studio",
+      url: "https://offpistestudio.com",
+      founder: { "@id": personId },
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://cloudmodular.com.au/#organization",
+      name: "Cloud Modular",
+      url: "https://cloudmodular.com.au",
+      founder: { "@id": personId },
+    },
+    {
+      "@type": "PodcastSeries",
+      "@id": "https://intelligencesnacks.com/#podcast",
       name: "Intelligence Snacks",
       url: "https://intelligencesnacks.com",
-      founder: { "@id": personId },
+      description: "A podcast about how artificial intelligence is changing work, business, software, and entrepreneurship.",
+      contributor: { "@id": personId },
+      sameAs: "https://www.youtube.com/@intelligencesnacks",
     },
   ],
 };
@@ -80,8 +114,11 @@ const structuredData = {
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    <meta name="author" content="Andy David" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
     <meta name="theme-color" content="#f2f1ec" />
     <link rel="canonical" href={canonical} />
+    <link rel="describedby" href="/llms.txt" />
     <link rel="icon" href="/favicon.ico?v=2" sizes="any" />
     <link rel="icon" href="/andy-david.webp?v=2" type="image/webp" />
     <meta property="og:type" content={type} />
