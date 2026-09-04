@@ -1,7 +1,7 @@
 ---
 title: Looking Glass
 category: bits
-summary: A native Mac app for turning screen recordings into focused stories.
+summary: A lightweight native macOS menu-bar recorder for polished videos with motion-aware zooms, mixed audio, camera overlays, and custom backgrounds.
 role: Creator
 year: "2026—Current"
 status: In development

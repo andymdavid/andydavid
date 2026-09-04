@@ -3,7 +3,7 @@ title: Off-Piste Studio
 category: bits
 summary: A digital studio using design and technology to solve difficult commercial problems.
 role: Co-founder
-year: "2026—Current"
+year: "2023—Current"
 status: Active
 externalUrl: https://offpistestudio.com
 logo: /off-piste-studio.webp

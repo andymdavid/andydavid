@@ -33,7 +33,10 @@ const links = (await getCollection("links", ({ data }) => !data.draft)).sort((a,
 
     <div class="availability-line">
       <span><i></i> Perth, Western Australia</span>
-      <a href="mailto:andy@otherstuff.studio">Let’s chat ↗</a>
+      <div class="contact-actions">
+        <a href="mailto:andy@otherstuff.studio">Let’s chat</a>
+        <a href="https://x.com/andymdavid" target="_blank" rel="me noreferrer">Message on X</a>
+      </div>
     </div>
   </section>
 
@@ -95,7 +98,11 @@ const links = (await getCollection("links", ({ data }) => !data.draft)).sort((a,
   .availability-line { display: flex; justify-content: space-between; gap: 24px; align-items: center; margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--faint); font: .61rem var(--mono); text-transform: uppercase; letter-spacing: .03em; }
   .availability-line span { display: flex; align-items: center; gap: 8px; }
   .availability-line i { width: 5px; height: 5px; background: #72c77a; border-radius: 50%; box-shadow: 0 0 0 3px color-mix(in srgb, #72c77a, transparent 78%); }
-  .availability-line a:hover { color: var(--text); }
+  .contact-actions { display: flex; align-items: center; gap: 7px; }
+  .contact-actions a { padding: 7px 10px; border: 1px solid var(--line-strong); border-radius: 7px; color: var(--muted); background: var(--surface); text-transform: none; letter-spacing: 0; transition: color .15s ease, border-color .15s ease, background .15s ease, transform .15s ease; }
+  .contact-actions a:first-child { color: var(--bg); border-color: var(--text); background: var(--text); }
+  .contact-actions a:hover { color: var(--text); border-color: var(--text); transform: translateY(-1px); }
+  .contact-actions a:first-child:hover { color: var(--bg); opacity: .86; }
   .work-section { margin-top: 82px; }
   .see-all { display: flex; justify-content: space-between; color: var(--muted); font-size: .7rem; padding: 15px 3px; }
   .see-all:hover { color: var(--text); }
