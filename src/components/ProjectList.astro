@@ -13,7 +13,7 @@ const initials = (title: string) => title.split(/[\s/-]+/).map((word) => word[0]
 ---
 {filterable && (
   <div class="work-controls" aria-label="Filter work">
-    <span class="control-label">Work &amp; Projects</span>
+    <span class="control-label">Work &amp; Side Quests</span>
     <div class="segmented">
       <button type="button" class:list={{ active: active === "all" }} data-filter="all">All</button>
       <button type="button" class:list={{ active: active === "bits" }} data-filter="bits"><i class="pixel bits"></i>Bits</button>
@@ -114,6 +114,7 @@ const initials = (title: string) => title.split(/[\s/-]+/).map((word) => word[0]
     .project-row a { grid-template-columns: 38px 1fr 18px; gap: 12px; padding-inline: 4px; }
     .project-row a:hover { padding-inline: 8px; }
     .project-logo, .project-fallback { width: 34px; height: 34px; }
+    .project-main small { display: -webkit-box; white-space: normal; overflow: hidden; text-overflow: clip; line-height: 1.4; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
     .project-meta { display: none; }
   }
 </style>
