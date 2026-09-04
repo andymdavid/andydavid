@@ -5,6 +5,7 @@ summary: Pure Australian active honey, wild-crafted in Western Australia.
 role: Co-founder
 year: "—"
 status: In development
+logo: /active-honey-co.webp
 accent: "#e6a93e"
 featured: true
 order: 6
