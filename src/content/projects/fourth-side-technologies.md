@@ -2,7 +2,7 @@
 title: Fourth Side Technologies
 category: bits
 summary: A digital platform providing work-integrated learning opportunities for university students and talent pathways for Fortune 500 internship and graduate programs.
-role: More soon
+role: Co-founder
 year: "—"
 status: Previous venture
 logo: /fourth-side-technologies.webp

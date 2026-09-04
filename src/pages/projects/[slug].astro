@@ -23,7 +23,11 @@ const projectSchema = {
   <article class="page project-page" style={`--project-accent:${project.data.accent}`}>
     <a class="back" href="/projects/">← All work</a>
     <div class="project-heading">
-      <div class="voxel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      {project.data.logo ? (
+        <img class="project-mark" src={project.data.logo} width="58" height="58" alt="" />
+      ) : (
+        <div class="voxel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      )}
       <p class="eyebrow">{project.data.category} / {project.data.year}</p>
       <h1 class="page-title">
         {project.data.externalUrl ? <a href={project.data.externalUrl} target="_blank" rel="noreferrer">{project.data.title}</a> : project.data.title}
@@ -44,6 +48,7 @@ const projectSchema = {
   .back { display: inline-block; margin-bottom: 54px; color: var(--faint); font: .59rem var(--mono); text-transform: uppercase; }
   .back:hover { color: var(--text); }
   .project-heading { position: relative; }
+  .project-mark { position: absolute; right: 4px; top: 0; width: 58px; height: 58px; border: 1px solid var(--line); border-radius: 12px; object-fit: cover; }
   .voxel { position: absolute; right: 4px; top: 0; display: grid; grid-template-columns: repeat(3, 13px); gap: 3px; transform: rotate(-3deg); }
   .voxel i { width: 13px; height: 13px; background: var(--project-accent); border: 1px solid color-mix(in srgb, var(--project-accent), #000 14%); }
   .voxel i:nth-child(2n) { opacity: .45; }
