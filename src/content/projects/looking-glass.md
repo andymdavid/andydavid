@@ -2,8 +2,8 @@
 title: Looking Glass
 category: bits
 summary: A native Mac app for turning screen recordings into focused stories.
-role: Product & development
-year: "2026"
+role: Creator
+year: "2026—Current"
 status: In development
 accent: "#6b82ff"
 featured: true

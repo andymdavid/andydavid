@@ -4,7 +4,7 @@ category: atoms
 summary: Pure Australian active honey, wild-crafted in Western Australia.
 role: Co-founder
 year: "—"
-status: In development
+status: Project concluded
 logo: /active-honey-co.webp
 accent: "#e6a93e"
 featured: true
